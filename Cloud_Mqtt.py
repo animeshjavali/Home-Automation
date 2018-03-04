@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 import os, urlparse
 import serial 
-ser=serial.Serial('COM4')
+ser=serial.Serial('COM4')# Start serial communication.
 
 
 # Define event callbacks
@@ -10,10 +10,10 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, obj, msg):
     print(msg.topic + " " + str(msg.qos) + " "+str(msg.payload))
-    if(msg.payload=="ON"):
+    if(msg.payload=="ON"):# If mqtt message is "ON", send 1 to Arduino(via UART).
     	ser.write('1')
     	print('1')
-    elif(msg.payload=="OFF"):
+    elif(msg.payload=="OFF"):# If mqtt message is "OFF", send 2 to Arduino(via UART).
     	ser.write('2')
 
 def on_publish(client, obj, mid):
@@ -38,11 +38,11 @@ mqttc.on_subscribe = on_subscribe
 # Parse CLOUDMQTT_URL (or fallback to localhost)
 url_str = os.environ.get('CLOUDMQTT_URL', 'mqtt://localhost:1883')
 url = urlparse.urlparse(url_str)
-topic = url.path[1:] or 'my_IoT'
+topic = url.path[1:] or 'my_IoT' #Define a unique topic on CloudMQTT dashboard.
 
 # Connect
-mqttc.username_pw_set('zzilcrwd', 'iL_24499QHb1')
-mqttc.connect('m14.cloudmqtt.com', 17237)
+mqttc.username_pw_set('zzilcrwd', 'iL_24499QHb1')#Unique username and password given to a user on CloudMQTT.
+mqttc.connect('m14.cloudmqtt.com', 17237)#(webserver,port number).
 
 # Start subscribe, with QoS level 0
 mqttc.subscribe(topic, 0)
