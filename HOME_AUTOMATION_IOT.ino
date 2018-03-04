@@ -5,16 +5,14 @@ void setup() {
 }
 
 void loop() {
-  if(Serial.available()>0)
+  if(Serial.available()>0)// Check for data.
   {
-  data=Serial.parseInt();
+  data=Serial.parseInt();// Get data as integer.
   if(data==1)
-  digitalWrite(13,HIGH);
+  digitalWrite(13,HIGH);// Turn on an LED if sent data is 1.
   else if(data==2)
-  digitalWrite(13,LOW);
-
+  digitalWrite(13,LOW);// Turn off the LED if sent data is 2.
   }
-  
-  }// put your main code here, to run repeatedly:
+}
 
 
